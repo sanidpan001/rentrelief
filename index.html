@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RentRelief — Free HRA Exemption Calculator | HRA Tax Calculator</title>
+  <meta name="description" content="Calculate HRA exemption and taxable HRA instantly with this free, unlimited HRA exemption calculator. Compare actual HRA, rent paid, salary and city type in seconds.">
+  <meta name="keywords" content="HRA exemption calculator, HRA calculator, HRA tax calculator, HRA exemption calculation, HRA exemption calculator India, house rent allowance calculator, taxable HRA calculator">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="RentRelief">
+  <meta name="theme-color" content="#f5f7fb">
+  <link rel="canonical" href="https://rentrelief.example.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RentRelief — Free HRA Exemption Calculator">
+  <meta property="og:description" content="Estimate HRA exemption and taxable HRA quickly with a free, unlimited online calculator.">
+  <meta property="og:url" content="https://rentrelief.example.com/">
+  <meta property="og:site_name" content="RentRelief">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"RentRelief HRA Exemption Calculator",
+    "url":"https://rentrelief.example.com/",
+    "applicationCategory":"FinanceApplication",
+    "operatingSystem":"Any",
+    "description":"Free online HRA exemption calculator for estimating HRA exemption and taxable HRA.",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"What is HRA exemption?","acceptedAnswer":{"@type":"Answer","text":"HRA exemption is the portion of eligible House Rent Allowance that may be exempt from tax when applicable conditions are met."}},
+      {"@type":"Question","name":"How is HRA exemption calculated?","acceptedAnswer":{"@type":"Answer","text":"Under the commonly used calculation, the exemption is the least of actual HRA received, rent paid minus 10% of salary, and 50% of salary for specified metro cities or 40% for other cities, subject to applicable rules."}},
+      {"@type":"Question","name":"Is this HRA calculator free?","acceptedAnswer":{"@type":"Answer","text":"Yes. RentRelief is designed for free and unlimited use without a subscription."}}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --ink:#182033;
+      --muted:#68738a;
+      --paper:#ffffff;
+      --bg:#f5f7fb;
+      --line:#e3e8f1;
+      --primary:#3155d8;
+      --primary-dark:#2444b9;
+      --mint:#16a88a;
+      --soft-blue:#edf2ff;
+      --soft-mint:#e9faf6;
+      --danger:#d94d65;
+      --shadow:0 20px 55px rgba(35,48,82,.10);
+      --radius:22px;
+      --max:1160px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:
+        radial-gradient(circle at 0 0,rgba(49,85,216,.08),transparent 30rem),
+        radial-gradient(circle at 100% 20%,rgba(22,168,138,.08),transparent 28rem),
+        var(--bg);
+      color:var(--ink);
+      font-family:"DM Sans",system-ui,sans-serif;
+      line-height:1.7;
+    }
+    a{text-decoration:none;color:inherit}
+    button,input,select{font:inherit}
+    .container{width:min(var(--max),calc(100% - 32px));margin:auto}
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(255,255,255,.88);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(227,232,241,.85);
+    }
+    .nav{
+      min-height:76px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-family:"Space Grotesk",sans-serif;
+      font-weight:700;
+      letter-spacing:-.04em;
+      font-size:21px;
+    }
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      color:white;
+      background:linear-gradient(145deg,#3155d8,#687cf0);
+      box-shadow:0 9px 22px rgba(49,85,216,.25);
+      font-size:17px;
+    }
+    .nav-right{display:flex;align-items:center;gap:7px}
+    .nav-link,.more-btn{
+      border:0;
+      background:transparent;
+      padding:10px 14px;
+      border-radius:12px;
+      color:#48536a;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .nav-link:hover,.more-btn:hover{background:#f0f3f9;color:var(--ink)}
+    .more-wrap{position:relative}
+    .more-menu{
+      position:absolute;
+      top:52px;
+      right:0;
+      display:none;
+      min-width:220px;
+      padding:8px;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:15px;
+      box-shadow:var(--shadow);
+    }
+    .more-menu.open{display:block}
+    .more-menu a{display:block;padding:11px 13px;border-radius:10px;font-weight:700;color:#4b566d}
+    .more-menu a:hover{background:#f3f6fc}
+
+    .hero{text-align:center;padding:66px 0 28px}
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:var(--soft-mint);
+      color:#087c67;
+      border:1px solid #c9eee6;
+      border-radius:999px;
+      padding:7px 13px;
+      font-size:12px;
+      font-weight:800;
+    }
+    h1{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(40px,6vw,69px);
+      line-height:1.02;
+      letter-spacing:-.065em;
+      max-width:850px;
+      margin:19px auto 17px;
+    }
+    .hero p{max-width:740px;margin:auto;color:var(--muted);font-size:17px}
+
+    .ad-label{
+      text-align:center;
+      color:#8993a7;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:9px;
+      margin-bottom:7px;
+    }
+    .ad-box{
+      min-height:112px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border:1px dashed #d7deea;
+      border-radius:18px;
+      background:rgba(255,255,255,.60);
+    }
+    .top-ad{margin:24px auto 34px}
+
+    .calculator{
+      max-width:930px;
+      margin:0 auto 32px;
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .calc-top{
+      padding:27px 30px;
+      background:linear-gradient(110deg,#17264f,#3155d8);
+      color:white;
+    }
+    .calc-top-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+    }
+    .calc-top h2{font-family:"Space Grotesk",sans-serif;font-size:29px;letter-spacing:-.04em}
+    .calc-top p{color:#cbd6ff;font-size:13px;margin-top:3px}
+    .free-pill{
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .calc-body{padding:30px}
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      font-size:13px;
+      font-weight:800;
+      color:#3e4960;
+    }
+    .field input,.field select{
+      width:100%;
+      border:1px solid var(--line);
+      background:#f9fbfe;
+      border-radius:14px;
+      padding:14px 15px;
+      color:var(--ink);
+      outline:0;
+      transition:.2s;
+    }
+    .field input:focus,.field select:focus{
+      border-color:#7186e9;
+      background:white;
+      box-shadow:0 0 0 4px rgba(49,85,216,.09);
+    }
+    .input-money{position:relative}
+    .input-money span{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#7b879c;
+      font-weight:800;
+    }
+    .input-money input{padding-left:31px}
+    .hint{font-size:11px;color:#8a94a8;margin-top:6px}
+    .error{display:none;color:var(--danger);font-size:11px;margin-top:6px;font-weight:700}
+    .error.show{display:block}
+
+    .actions{display:flex;gap:12px;margin-top:24px}
+    .btn{
+      border:0;
+      border-radius:14px;
+      padding:14px 20px;
+      cursor:pointer;
+      font-weight:800;
+      transition:.2s;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .calculate{flex:1;background:var(--primary);color:white;box-shadow:0 10px 22px rgba(49,85,216,.18)}
+    .calculate:hover{background:var(--primary-dark)}
+    .reset{background:#eef2f8;color:#465168}
+
+    .result{
+      display:none;
+      margin-top:24px;
+      border:1px solid #cfe0ff;
+      background:linear-gradient(135deg,#f3f6ff,#effaf7);
+      border-radius:20px;
+      padding:23px;
+    }
+    .result.show{display:block}
+    .result-label{font-size:12px;color:#69758b;font-weight:800}
+    .result-grid{
+      display:grid;
+      grid-template-columns:1.2fr 1fr;
+      gap:22px;
+      align-items:center;
+    }
+    .amount{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(35px,5vw,53px);
+      letter-spacing:-.06em;
+      line-height:1.1;
+      margin-top:3px;
+    }
+    .result-note{font-size:12px;color:#707c91;margin-top:7px}
+    .numbers{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .number{
+      padding:12px;
+      background:rgba(255,255,255,.68);
+      border:1px solid rgba(215,223,237,.8);
+      border-radius:13px;
+    }
+    .number span{display:block;font-size:10px;color:#8590a4}
+    .number strong{display:block;margin-top:2px;font-size:14px}
+
+    .content{max-width:960px;margin:55px auto 0}
+    .content h2{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:32px;
+      letter-spacing:-.045em;
+      line-height:1.2;
+      margin:43px 0 12px;
+    }
+    .content h3{font-size:20px;margin:28px 0 7px}
+    .content p{color:#657188;margin:10px 0}
+    .content ul{padding-left:23px;color:#657188}
+    .content li{margin:7px 0}
+    .note{
+      margin:22px 0;
+      padding:21px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(35,48,82,.05);
+    }
+    .note strong{color:var(--ink)}
+
+    .bottom-ad{margin:35px auto 20px}
+
+    .faq{max-width:960px;margin:52px auto}
+    .faq h2{font-family:"Space Grotesk",sans-serif;font-size:32px;letter-spacing:-.045em;margin-bottom:18px}
+    details{background:white;border:1px solid var(--line);border-radius:15px;margin:10px 0}
+    summary{cursor:pointer;padding:17px 18px;font-weight:800;list-style:none}
+    summary::-webkit-details-marker{display:none}
+    details p{padding:0 18px 18px;color:#68748a}
+
+    footer{border-top:1px solid var(--line);margin-top:70px;background:white;padding:34px 0 45px}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .footer-left .brand{margin-bottom:7px}
+    .copyright{font-size:12px;color:#8a94a7}
+    .footer-links{display:flex;gap:18px;flex-wrap:wrap;color:#6c778c;font-size:13px;font-weight:700}
+    .footer-links a:hover{color:var(--primary)}
+
+    @media(max-width:720px){
+      .container{width:calc(100% - 20px)}
+      .nav{min-height:68px}
+      .brand{font-size:18px}
+      .logo{width:38px;height:38px}
+      .nav-link{display:none}
+      .hero{padding:48px 0 21px}
+      h1{font-size:42px}
+      .hero p{font-size:15px}
+      .ad-box{min-height:68px}
+      .calculator{border-radius:22px}
+      .calc-top{padding:22px 19px}
+      .calc-top-row{align-items:flex-start}
+      .calc-top h2{font-size:24px}
+      .calc-body{padding:20px}
+      .form-grid{grid-template-columns:1fr}
+      .actions{flex-direction:column}
+      .result-grid{grid-template-columns:1fr}
+      .numbers{grid-template-columns:1fr 1fr}
+      .content h2,.faq h2{font-size:27px}
+      .footer-inner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home" aria-label="RentRelief home">
+      <span class="logo">RR</span>
+      <span>RentRelief</span>
+    </a>
+
+    <div class="nav-right">
+      <a class="nav-link" href="#home">Home</a>
+      <div class="more-wrap">
+        <button class="more-btn" id="moreBtn" aria-expanded="false">More Tools ▾</button>
+        <div class="more-menu" id="moreMenu">
+          <a href="https://fixorra.tech/" target="_blank" rel="noopener">Explore More Tools ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero container">
+    <span class="tag">✦ Free forever · No subscription · Unlimited use</span>
+    <h1>Know Your HRA Exemption Before You File.</h1>
+    <p>Estimate your House Rent Allowance exemption and taxable HRA using salary, rent, HRA received and city type. Fast, simple and built for everyday tax planning.</p>
+  </section>
+
+  <section class="container top-ad" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-box">
+      <script>
+        atOptions = {
+          'key' : '4e68ac77881c17fe128a46565d9a4e8c',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+    </div>
+  </section>
+
+  <section class="calculator" aria-labelledby="calcTitle">
+    <div class="calc-top">
+      <div class="calc-top-row">
+        <div>
+          <h2 id="calcTitle">HRA Exemption Calculator</h2>
+          <p>Enter your annual figures for an instant estimate.</p>
+        </div>
+        <span class="free-pill">100% FREE</span>
+      </div>
+    </div>
+
+    <div class="calc-body">
+      <div class="form-grid">
+        <div class="field">
+          <label for="basic">Annual basic salary + DA</label>
+          <div class="input-money"><span>₹</span><input id="basic" type="number" min="0" step="1" placeholder="e.g. 600000" inputmode="decimal"></div>
+          <div class="hint">Use the annual salary amount relevant to HRA calculation.</div>
+          <div class="error" id="basicError">Enter a valid amount greater than zero.</div>
+        </div>
+
+        <div class="field">
+          <label for="hra">Annual HRA received</label>
+          <div class="input-money"><span>₹</span><input id="hra" type="number" min="0" step="1" placeholder="e.g. 180000" inputmode="decimal"></div>
+          <div class="hint">Total HRA received during the relevant year.</div>
+          <div class="error" id="hraError">Enter a valid HRA amount.</div>
+        </div>
+
+        <div class="field">
+          <label for="rent">Annual rent paid</label>
+          <div class="input-money"><span>₹</span><input id="rent" type="number" min="0" step="1" placeholder="e.g. 240000" inputmode="decimal"></div>
+          <div class="hint">Total qualifying rent paid for the year.</div>
+          <div class="error" id="rentError">Enter a valid rent amount.</div>
+        </div>
+
+        <div class="field">
+          <label for="city">City type</label>
+          <select id="city">
+            <option value="metro">Specified metro city — 50%</option>
+            <option value="nonmetro">Other city — 40%</option>
+          </select>
+          <div class="hint">The percentage depends on the applicable city classification.</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn calculate" id="calculate">Calculate HRA Exemption</button>
+        <button class="btn reset" id="reset" type="button">Reset</button>
+      </div>
+
+      <div class="result" id="result" aria-live="polite">
+        <div class="result-grid">
+          <div>
+            <div class="result-label">Estimated HRA exemption</div>
+            <div class="amount" id="exempt">₹0</div>
+            <div class="result-note" id="resultNote">The exemption is the lowest of the three applicable amounts.</div>
+          </div>
+          <div class="numbers">
+            <div class="number"><span>Actual HRA</span><strong id="actualOut">₹0</strong></div>
+            <div class="number"><span>Rent − 10% salary</span><strong id="rentOut">₹0</strong></div>
+            <div class="number"><span>50/40% salary limit</span><strong id="cityOut">₹0</strong></div>
+            <div class="number"><span>Estimated taxable HRA</span><strong id="taxableOut">₹0</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="content">
+    <h2>HRA Exemption Calculator: Complete Guide</h2>
+    <p>House Rent Allowance, commonly called HRA, is a salary component that may provide tax relief to eligible salaried individuals who live in rented accommodation. The actual tax treatment depends on the applicable tax regime, eligibility conditions and the rules in force for the relevant financial year.</p>
+    <p>This HRA calculator is designed to make the common exemption calculation easier. You enter annual basic salary plus applicable dearness allowance, annual HRA received, annual rent paid and the relevant city type. The tool then compares the three commonly used exemption limits and displays the lowest applicable amount as an estimate.</p>
+
+    <div class="note">
+      <strong>Important tax note:</strong>
+      <p>This is an educational calculator, not tax advice. Tax rules can change and the treatment of HRA depends on your circumstances and the tax regime selected. Verify important tax decisions against current official guidance or a qualified tax professional.</p>
+    </div>
+
+    <h2>What is HRA?</h2>
+    <p>HRA stands for House Rent Allowance. It is an allowance that employers may include in an employee's salary structure to support accommodation expenses. When the relevant conditions are satisfied, a portion of HRA can qualify for tax exemption under the applicable provisions.</p>
+    <p>HRA should not be confused with total salary. Your salary may include basic salary, dearness allowance, HRA, special allowance, bonuses and several other components. The HRA exemption calculation generally uses specific salary components rather than the complete gross salary.</p>
+
+    <h2>How HRA exemption is commonly calculated</h2>
+    <p>For the commonly used calculation under the applicable HRA exemption provisions, the exempt amount is the least of three figures:</p>
+    <ul>
+      <li>Actual HRA received from the employer.</li>
+      <li>Rent paid minus 10% of the relevant salary.</li>
+      <li>50% of the relevant salary for specified metro cities, or 40% for other cities.</li>
+    </ul>
+    <p>The calculator compares these three figures automatically. The smallest positive eligible figure is displayed as the estimated exemption. Any remaining HRA after the estimated exemption is treated as taxable HRA for this simplified calculation.</p>
+
+    <h2>HRA exemption formula</h2>
+    <p>A simplified representation of the commonly used calculation is:</p>
+    <p><strong>HRA exemption = Minimum of (Actual HRA, Rent paid − 10% of salary, 50%/40% of salary)</strong></p>
+    <p>The relevant salary is generally basic salary plus dearness allowance to the extent the applicable rules require it to be considered. The exact calculation can depend on employment terms and the applicable statutory provisions.</p>
+
+    <h3>Example of HRA calculation</h3>
+    <p>Suppose an employee has annual basic salary plus relevant DA of ₹6,00,000, receives ₹1,80,000 as HRA and pays ₹2,40,000 in annual rent. If the applicable city limit is 50%, the three figures are compared: actual HRA, rent minus 10% of salary, and 50% of salary.</p>
+    <p>The calculator performs these comparisons instantly. The lowest applicable amount becomes the estimated HRA exemption, while the balance of HRA is shown as estimated taxable HRA.</p>
+
+    <h2>Why rent matters in HRA exemption</h2>
+    <p>HRA exemption is connected to actual rent paid. If rent is low compared with the salary and HRA received, the rent-based calculation can become the limiting figure. This is why simply knowing your HRA amount is not enough to estimate the exemption.</p>
+    <p>For a person who receives HRA but does not pay rent for qualifying accommodation, the circumstances can be different from those of an employee actually paying rent. Do not assume that receiving HRA automatically means the entire allowance is exempt.</p>
+
+    <h2>Why 50% or 40% is used</h2>
+    <p>The commonly used HRA exemption calculation applies a higher percentage of salary for specified metro cities and a lower percentage for other locations. The city classification used for tax purposes should be checked for the relevant period and circumstances.</p>
+    <p>RentRelief lets you select the applicable category so the calculation can be performed without manually changing the formula.</p>
+
+    <h2>What salary should be entered?</h2>
+    <p>The calculator asks for annual basic salary plus DA because these are the core salary components commonly considered for the standard HRA exemption calculation. Gross salary or total compensation should not automatically be entered as the salary basis.</p>
+    <p>If your DA does not form part of retirement benefits, or if your salary structure contains unusual components, the exact treatment may need additional review. Payroll records and current rules should be checked before using the estimate for filing.</p>
+
+    <h2>What HRA amount should be entered?</h2>
+    <p>Enter the total HRA actually received for the relevant year. You can usually find this figure in your salary slips, Form 16 or salary statement. If your HRA changed during the year, add the relevant amounts for the complete period being calculated.</p>
+
+    <h2>What rent amount should be entered?</h2>
+    <p>Enter the actual annual rent paid for the relevant accommodation and period. Keep supporting documents such as rent receipts or other records where appropriate. Depending on the circumstances and applicable rules, documentation requirements can vary.</p>
+
+    <h2>HRA and the old tax regime</h2>
+    <p>HRA exemption is associated with the applicable provisions for salaried individuals and is generally relevant when the conditions for claiming the exemption are met. The choice of tax regime can materially affect which deductions and exemptions are available.</p>
+    <p>Because tax-regime rules can change, use current official guidance for the financial year you are filing for. This calculator focuses on the mathematical HRA exemption estimate and does not determine which tax regime is best for you.</p>
+
+    <h2>HRA under the new tax regime</h2>
+    <p>The availability of exemptions can differ under the new tax regime. Therefore, an HRA amount shown by a mathematical calculator should not automatically be interpreted as a tax saving under every regime.</p>
+    <p>When comparing regimes, consider all applicable income, deductions, exemptions and rebates rather than looking only at HRA. Current rules should always be checked for the relevant assessment year.</p>
+
+    <h2>HRA exemption and taxable HRA</h2>
+    <p>Taxable HRA is generally the portion of HRA that does not qualify for exemption under the applicable calculation. In the simplified calculator, taxable HRA is calculated as actual HRA received minus estimated exemption, with a floor of zero.</p>
+    <p>This result is an estimate and should not be treated as a final tax liability. Your total tax depends on your complete income profile and the rules applicable to your filing.</p>
+
+    <h2>Can you claim HRA if you live in a rented house?</h2>
+    <p>Potentially, if the applicable eligibility and documentation conditions are satisfied. The fact that accommodation is rented is one part of the calculation; salary, HRA received, actual rent, city classification and tax-regime rules can also matter.</p>
+    <p>If you pay rent to a family member or have another special arrangement, additional tax considerations can apply. Keep genuine records and follow the applicable rules.</p>
+
+    <h2>HRA without receiving HRA</h2>
+    <p>Employees who do not receive HRA as a salary component may have different provisions available in certain circumstances. A calculator designed specifically for HRA exemption should not be used to determine a separate rent-related deduction without checking the relevant rule.</p>
+
+    <h2>Documents commonly used for HRA claims</h2>
+    <p>Depending on the employer's process and applicable requirements, employees may be asked for rent receipts, rental agreements, landlord information or other supporting records. The exact documentation requirement can vary based on the amount and circumstances.</p>
+    <p>Keep records accurate and consistent with the rent actually paid. Do not create or alter documents merely to obtain a tax benefit.</p>
+
+    <h2>Common HRA calculation mistakes</h2>
+    <h3>Using gross salary</h3>
+    <p>Gross salary can be much higher than the salary figure used for the HRA formula. Entering gross salary can therefore produce a misleading estimate.</p>
+    <h3>Forgetting annualisation</h3>
+    <p>If you enter a monthly salary while entering annual rent and annual HRA, the calculation will not be meaningful. Keep all three amounts on the same annual basis.</p>
+    <h3>Using total rent incorrectly</h3>
+    <p>Enter rent actually paid for the relevant period rather than an expected future amount. The calculation is based on the relevant year's figures.</p>
+    <h3>Assuming all HRA is exempt</h3>
+    <p>The exemption is subject to limits. The lowest of the applicable figures is used in the common calculation, so the entire HRA may not be exempt.</p>
+    <h3>Ignoring tax-regime rules</h3>
+    <p>A mathematical result does not automatically establish that the exemption can be claimed under every tax regime or situation.</p>
+
+    <h2>How to use this HRA calculator</h2>
+    <ul>
+      <li>Enter your annual basic salary plus applicable DA.</li>
+      <li>Enter your annual HRA received.</li>
+      <li>Enter the annual rent actually paid.</li>
+      <li>Select the applicable city type.</li>
+      <li>Click “Calculate HRA Exemption”.</li>
+      <li>Review the exemption, taxable HRA and calculation components.</li>
+      <li>Change the figures and calculate again for another scenario.</li>
+    </ul>
+
+    <h2>Why use an online HRA calculator?</h2>
+    <p>HRA calculations involve comparing several values. Doing the arithmetic manually can be inconvenient when you want to test multiple salary or rent scenarios. An online calculator can make the process quicker and can also show the intermediate figures used in the comparison.</p>
+    <p>RentRelief is designed for repeated use without requiring an account or subscription. You can use it for planning, learning and preliminary checking.</p>
+
+    <h2>Monthly versus annual HRA calculations</h2>
+    <p>HRA can be shown monthly on salary slips, while tax calculations are commonly considered over an annual period. When using this calculator, convert monthly amounts into annual amounts consistently before calculating.</p>
+    <p>For example, if a monthly HRA amount remains unchanged throughout the year, multiplying it by the number of relevant months gives the annual figure. If the amount changes, use the actual amounts for each period.</p>
+
+    <h2>Does city change HRA exemption?</h2>
+    <p>Yes, the commonly used exemption formula applies different salary percentages based on specified metro versus other city classification. This can change the third limit in the calculation and therefore can change the final exemption estimate.</p>
+
+    <h2>Does higher rent always mean higher exemption?</h2>
+    <p>Not necessarily. Higher rent can increase the rent-based limit, but the final exemption remains subject to the other limits. Actual HRA received and the city-based percentage can still cap the exemption.</p>
+
+    <h2>Does higher HRA always mean higher exemption?</h2>
+    <p>Not necessarily. The exemption cannot simply be assumed to equal the HRA received. The actual HRA, rent-based figure and city-based figure must all be compared.</p>
+
+    <h2>Can HRA exemption exceed HRA received?</h2>
+    <p>Under the common “least of three” calculation, the exemption cannot exceed the actual HRA received because actual HRA is one of the limiting amounts.</p>
+
+    <h2>Can I use this calculator for financial planning?</h2>
+    <p>Yes, it can be used as a preliminary planning tool. You can estimate how changes in salary, HRA, rent and city category affect the mathematical result. For actual tax filing, verify the result against current rules and your official records.</p>
+
+    <h2>HRA calculator for employees</h2>
+    <p>Employees can use RentRelief to understand the relationship between rent, salary and HRA. The result card deliberately shows the three comparison values so that the calculation is transparent rather than being a black-box number.</p>
+
+    <h2>HRA calculator for HR and payroll learners</h2>
+    <p>Students and payroll learners can use the calculator to practise the standard HRA exemption formula. Try different combinations of salary, rent and HRA to see which of the three limits becomes the smallest.</p>
+
+    <h2>Privacy and browser-based calculation</h2>
+    <p>The core mathematical calculation on this page runs in the browser using JavaScript. No subscription or account is required to perform the calculation. Advertising providers embedded on a deployed version can have their own data practices and privacy policies.</p>
+
+    <h2>Important limitations</h2>
+    <p>This calculator does not calculate your complete income tax, compare tax regimes, determine final tax liability, validate rent receipts, verify employment records or provide legal advice. It is focused on the common HRA exemption arithmetic.</p>
+
+    <h2>SEO-friendly HRA information hub</h2>
+    <p>Searches such as “HRA exemption calculator”, “HRA calculator India”, “HRA tax calculator”, “how to calculate HRA exemption”, “HRA exemption formula”, “taxable HRA calculator” and “house rent allowance calculator” generally relate to understanding the same core calculation. This page explains the underlying concepts so users can understand the result rather than relying only on a number.</p>
+
+    <h2>Final checklist before using the result</h2>
+    <ul>
+      <li>Make sure salary and HRA figures are annual and relate to the same period.</li>
+      <li>Use actual rent paid for the relevant period.</li>
+      <li>Confirm the applicable city classification.</li>
+      <li>Check whether the relevant tax regime permits the exemption in your circumstances.</li>
+      <li>Keep appropriate supporting records.</li>
+      <li>Check current official tax guidance before filing.</li>
+    </ul>
+
+    <h2>About RentRelief</h2>
+    <p>RentRelief is a simple browser-based calculator focused on making HRA estimation understandable and accessible. The service is designed around a clean interface, fast calculations, responsive mobile support and free unlimited use without a subscription.</p>
+
+    <h2>Explore more free tools</h2>
+    <p>If you need other browser-based calculators and utilities, open the More Tools menu above to explore the wider tool collection at Fixorra.tech.</p>
+  </article>
+
+  <section class="container bottom-ad" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-box">
+      <div data-banner-id="1501463"></div>
+    </div>
+  </section>
+
+  <section class="faq container" id="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>What is HRA exemption?</summary>
+      <p>HRA exemption is the portion of eligible House Rent Allowance that may qualify for tax exemption when the applicable conditions are met.</p>
+    </details>
+
+    <details>
+      <summary>What is the common HRA exemption formula?</summary>
+      <p>The common calculation compares actual HRA, rent paid minus 10% of relevant salary, and 50% or 40% of relevant salary depending on the applicable city category. The lowest amount is used.</p>
+    </details>
+
+    <details>
+      <summary>Is RentRelief free?</summary>
+      <p>Yes. The calculator is designed for free and unlimited use without a subscription.</p>
+    </details>
+
+    <details>
+      <summary>Should I enter monthly or annual figures?</summary>
+      <p>Enter annual figures for salary, HRA and rent so all inputs use the same time period.</p>
+    </details>
+
+    <details>
+      <summary>Should gross salary be entered?</summary>
+      <p>No. For the standard calculation, use the relevant basic salary plus DA rather than automatically using total gross salary.</p>
+    </details>
+
+    <details>
+      <summary>Does this calculator calculate my total income tax?</summary>
+      <p>No. It estimates HRA exemption and taxable HRA only. It does not calculate complete tax liability.</p>
+    </details>
+
+    <details>
+      <summary>Does the calculator decide my tax regime?</summary>
+      <p>No. It does not recommend or select a tax regime. Current rules should be checked for your circumstances.</p>
+    </details>
+
+    <details>
+      <summary>Can I use the calculator multiple times?</summary>
+      <p>Yes. You can change the inputs and calculate unlimited scenarios.</p>
+    </details>
+
+    <details>
+      <summary>Is the result guaranteed to be my final exemption?</summary>
+      <p>No. It is an estimate based on the common calculation. Verify the result using current rules and your payroll or tax records.</p>
+    </details>
+
+    <details>
+      <summary>Where can I find more tools?</summary>
+      <p>Use the More Tools button in the header to visit Fixorra.tech.</p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-left">
+      <div class="brand"><span class="logo">RR</span><span>RentRelief</span></div>
+      <div class="copyright">© <span id="year"></span> RentRelief. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#faq">FAQ</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="https://fixorra.tech/" target="_blank" rel="noopener">More Tools</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  const basic = $("basic");
+  const hra = $("hra");
+  const rent = $("rent");
+  const city = $("city");
+  const result = $("result");
+
+  const money = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0
+  });
+
+  function positiveNumber(input){
+    const value = Number(input.value);
+    return Number.isFinite(value) && value >= 0;
+  }
+
+  function showError(id, show){
+    $(id).classList.toggle("show", show);
+  }
+
+  function calculateHRA(){
+    const basicValue = Number(basic.value);
+    const hraValue = Number(hra.value);
+    const rentValue = Number(rent.value);
+
+    const basicBad = !Number.isFinite(basicValue) || basicValue <= 0;
+    const hraBad = !Number.isFinite(hraValue) || hraValue < 0;
+    const rentBad = !Number.isFinite(rentValue) || rentValue < 0;
+
+    showError("basicError", basicBad);
+    showError("hraError", hraBad);
+    showError("rentError", rentBad);
+
+    if(basicBad || hraBad || rentBad){
+      result.classList.remove("show");
+      return;
+    }
+
+    const rentMinusTenPercent = Math.max(0, rentValue - (basicValue * 0.10));
+    const cityRate = city.value === "metro" ? 0.50 : 0.40;
+    const cityLimit = basicValue * cityRate;
+
+    const exemption = Math.min(
+      hraValue,
+      rentMinusTenPercent,
+      cityLimit
+    );
+
+    const taxable = Math.max(0, hraValue - exemption);
+
+    $("exempt").textContent = money.format(exemption);
+    $("actualOut").textContent = money.format(hraValue);
+    $("rentOut").textContent = money.format(rentMinusTenPercent);
+    $("cityOut").textContent = money.format(cityLimit);
+    $("taxableOut").textContent = money.format(taxable);
+
+    result.classList.add("show");
+  }
+
+  function resetHRA(){
+    basic.value = "";
+    hra.value = "";
+    rent.value = "";
+    city.value = "metro";
+    result.classList.remove("show");
+    ["basicError","hraError","rentError"].forEach(id => $(id).classList.remove("show"));
+    basic.focus();
+  }
+
+  $("calculate").addEventListener("click", calculateHRA);
+  $("reset").addEventListener("click", resetHRA);
+
+  [basic,hra,rent].forEach(input => {
+    input.addEventListener("keydown", event => {
+      if(event.key === "Enter") calculateHRA();
+    });
+  });
+
+  $("moreBtn").addEventListener("click", () => {
+    const menu = $("moreMenu");
+    const open = menu.classList.toggle("open");
+    $("moreBtn").setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  document.addEventListener("click", event => {
+    if(!event.target.closest(".more-wrap")){
+      $("moreMenu").classList.remove("open");
+      $("moreBtn").setAttribute("aria-expanded","false");
+    }
+  });
+
+  $("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
